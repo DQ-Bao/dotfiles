@@ -2,7 +2,9 @@
 
 WIN_HOME=$(cygpath -u "${USERPROFILE}")
 WIN_LOCAL=$(cygpath -u "${LOCALAPPDATA}")
+WIN_DATA=$(cygpath -u "${APPDATA}")
 declare -A targets=(
+    ["browser/firefox/user.js"]="${WIN_DATA}/Mozilla/Firefox/Profiles/1juvvlpx.betterfox/user.js"
     ["nvim"]="${WIN_LOCAL}/nvim"
     ["ohmyposh"]="${HOME}/.config/ohmyposh"
     [".gitconfig"]="${HOME}/.gitconfig"
