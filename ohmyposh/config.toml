@@ -1,0 +1,88 @@
+version = 3
+final_space = true
+console_title_template = '{{ .Shell }}::{{ .Folder }}'
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'root'
+    style = 'plain'
+    foreground = 'yellow'
+    background = 'transparent'
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+  [[blocks.segments]]
+    type = 'session'
+    style = 'plain'
+    foreground = 'cyan'
+    background = 'transparent'
+    template = '{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} <magenta>{{ .Env.MSYSTEM }}</>'
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    foreground = 'blue'
+    background = 'transparent'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      style = 'full'
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground = 'darkGray'
+    background = 'transparent'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      branch_icon = ''
+      commit_icon = '@'
+      fetch_status = true
+      fetch_upstream_icon = true
+
+[[blocks]]
+  type = 'rprompt'
+  overflow = 'hidden'
+
+  [[blocks.segments]]
+    template = '{{ .FormattedMs }}'
+    foreground = 'yellow'
+    background = 'transparent'
+    type = 'executiontime'
+    style = 'plain'
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+      threshold = 200
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    template = '❯'
+    background = 'transparent'
+    foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
+
+    [blocks.segments.properties]
+      cache_duration = 'none'
+
+[secondary_prompt]
+  template = '❯❯ '
+  foreground = 'magenta'
+  background = 'transparent'
+
+[transient_prompt]
+  template = '❯ '
+  background = 'transparent'
+  foreground_templates = ['{{if gt .Code 0}}red{{end}}', '{{if eq .Code 0}}magenta{{end}}']
