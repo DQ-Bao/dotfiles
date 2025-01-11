@@ -1,15 +1,12 @@
 #!/bin/bash
 
+WIN_HOME=$(cygpath -u "${USERPROFILE}")
 declare -A targets=(
-    [".zshrc"]="${HOME}/.zshrc"
     ["ohmyposh"]="${HOME}/.config/ohmyposh"
+    [".gitconfig"]="${HOME}/.gitconfig"
+    [".wezterm.lua"]="${WIN_HOME}/.wezterm.lua"
+    [".zshrc"]="${HOME}/.zshrc"
 )
-
-# echo "$USERPROFILE"
-# echo "$HOMEPATH"
-# echo "$HOMEDRIVE"
-# echo "$APPDATA"
-# echo "$LOCALAPPDATA"
 
 for target in "${!targets[@]}"; do
     link=${targets[$target]}
