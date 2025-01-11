@@ -1,7 +1,9 @@
 #!/bin/bash
 
 WIN_HOME=$(cygpath -u "${USERPROFILE}")
+WIN_LOCAL=$(cygpath -u "${LOCALAPPDATA}")
 declare -A targets=(
+    ["nvim"]="${WIN_LOCAL}/nvim"
     ["ohmyposh"]="${HOME}/.config/ohmyposh"
     [".gitconfig"]="${HOME}/.gitconfig"
     [".wezterm.lua"]="${WIN_HOME}/.wezterm.lua"
