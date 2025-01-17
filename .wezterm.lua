@@ -48,7 +48,7 @@ config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.tab_and_split_indices_are_zero_based = true
-config.tab_max_width = 32
+config.tab_max_width = 128
 
 local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
 local THIN_RIGHT_ARROW = wezterm.nerdfonts.pl_left_soft_divider
@@ -158,8 +158,12 @@ end)
 local launch_menu = {}
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	table.insert(launch_menu, {
-		label = "Powershell",
+		label = "Windows Powershell",
 		args = { "powershell.exe" },
+	})
+	table.insert(launch_menu, {
+		label = "Powershell 7",
+		args = { "pwsh.exe" },
 	})
 	table.insert(launch_menu, {
 		label = "Command Prompt",
@@ -198,6 +202,11 @@ config.keys = {
 		key = "l",
 		mods = "ALT",
 		action = act.ShowLauncher,
+	},
+	{
+		key = "v",
+		mods = "CTRL",
+		action = act.PasteFrom("Clipboard"),
 	},
 	{
 		key = "w",
