@@ -34,7 +34,6 @@ config.font = wezterm.font("Hack Nerd Font Mono")
 config.font_size = 14
 
 -- Windows
-config.window_decorations = "NONE | RESIZE"
 config.window_padding = {
 	left = 0,
 	right = 0,
