@@ -20,7 +20,7 @@ console_title_template = '{{ .Shell }}::{{ .Folder }}'
     style = 'plain'
     foreground = 'cyan'
     background = 'transparent'
-    template = '{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} <magenta>{{ .Env.MSYSTEM }}</>'
+    template = '{{ if .SSHSession }} {{ end }}<magenta>{{ .Env.MSYSTEM }}</>'
     [blocks.segments.properties]
       cache_duration = 'none'
 
