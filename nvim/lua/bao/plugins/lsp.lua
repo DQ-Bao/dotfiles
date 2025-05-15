@@ -20,6 +20,7 @@ return {
 					"cssls",
 					"omnisharp",
 				},
+				automatic_enable = false,
 			})
 		end,
 	},
@@ -57,19 +58,7 @@ return {
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			local on_attach = function(_, _)
-				local map = vim.keymap.set
-				local telescope = require("telescope.builtin")
-				map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Code rename" })
-				map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-				map("n", "gd", vim.lsp.buf.definition, { desc = "Code go to definition" })
-				map("n", "gi", telescope.lsp_implementations, { desc = "Code go to implementations" })
-				map("n", "gr", telescope.lsp_references, { desc = "Code go to references" })
-				map("n", "K", vim.lsp.buf.hover, { desc = "Code hover" })
-			end
-
 			lspconfig.lua_ls.setup({
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -88,7 +77,6 @@ return {
 			})
 
 			lspconfig.clangd.setup({
-				on_attach = on_attach,
 				capabilities = capabilities,
 				cmd = {
 					"clangd",
@@ -103,7 +91,6 @@ return {
 			})
 
 			vim.g.rustaceanvim = {
-				on_attach = on_attach,
 				capabilities = capabilities,
 				server = {
 					default_settings = {
@@ -117,7 +104,6 @@ return {
 			}
 
 			lspconfig.omnisharp.setup({
-				on_attach = on_attach,
 				capabilities = capabilities,
 				filetypes = { "cs" },
 			})
@@ -125,22 +111,18 @@ return {
 			local html_css_cap = require("cmp_nvim_lsp").default_capabilities()
 			html_css_cap.textDocument.completion.completionItem.snippetSupport = true
 			lspconfig.cssls.setup({
-				on_attach = on_attach,
 				capabilities = html_css_cap,
 			})
 
 			lspconfig.html.setup({
-				on_attach = on_attach,
 				capabilities = html_css_cap,
 			})
 
 			lspconfig.tailwindcss.setup({
-				on_attach = on_attach,
 				capabilities = capabilities,
 			})
 
 			lspconfig.ts_ls.setup({
-				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = {
 					single_file_support = false,

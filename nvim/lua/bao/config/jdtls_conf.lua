@@ -1,7 +1,5 @@
 local function get_jdtls()
-	local mason_registry = require("mason-registry")
-	local jdtls = mason_registry.get_package("jdtls")
-	local jdtls_path = vim.fn.fnamemodify(jdtls:get_install_path(), ":p")
+	local jdtls_path = vim.fn.expand("$MASON/packages/jdtls/")
 	-- Obtain the path to the jar which runs the language server
 	local launcher = vim.fn.glob(jdtls_path .. "plugins/org.eclipse.equinox.launcher_*.jar")
 	local config = jdtls_path .. "config_win"

@@ -4,10 +4,7 @@ vim.g.netrw_localmovecmdopt = ""
 vim.g.netrw_localcopycmd = "cp"
 vim.g.netrw_localcopycmdopt = ""
 
-vim.opt.shell = "bash"
-vim.opt.shellcmdflag = "-c"
-vim.opt.shellxquote = '""'
-vim.opt.shellslash = true
+vim.opt.shell = "cmd"
 
 vim.opt.showmode = false
 vim.opt.nu = true

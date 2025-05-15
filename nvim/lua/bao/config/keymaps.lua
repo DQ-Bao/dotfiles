@@ -33,10 +33,9 @@ vim.keymap.set("v", "<", "<gv", { desc = "Unindent lines", silent = true })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent lines", silent = true })
 
 local diagnostic_goto = function(next, severity)
-	local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
 	severity = severity and vim.diagnostic.severity[severity] or nil
 	return function()
-		go({ severity = severity })
+		vim.diagnostic.jump({ count = next and 1 or -1, float = true, severity = severity })
 	end
 end
 vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View Diagnostics" })
