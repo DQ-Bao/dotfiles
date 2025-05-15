@@ -117,11 +117,11 @@ local function setup_jdtls()
 		java = {
 			-- Enable code formatting
 			format = {
-				enabled = false,
+				enabled = true,
 				-- Use the Google Style guide for code formattingh
 				settings = {
-					url = "file:///" .. vim.fn.stdpath("config") .. "/lang_servers/intellij-java-google-style.xml",
-					profile = "GoogleStyle",
+					url = "file:///" .. vim.fn.stdpath("config") .. "/lang_servers/palantir-java-style.xml",
+					profile = "PalantirStyle",
 				},
 			},
 			-- Enable downloading archives from eclipse automatically
@@ -196,6 +196,16 @@ local function setup_jdtls()
 			-- If changes to the project will require the developer to update the projects configuration advise the developer before accepting the change
 			configuration = {
 				updateBuildConfiguration = "interactive",
+				runtimes = {
+					{
+						name = "JavaSE-17",
+						path = "c:/Program Files/Java/jdk-17",
+					},
+					{
+						name = "JavaSE-21",
+						path = "c:/Program Files/Java/jdk-21",
+					},
+				},
 			},
 			-- enable code lens in the lsp
 			referencesCodeLens = {

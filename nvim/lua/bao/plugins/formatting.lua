@@ -4,6 +4,11 @@ return {
 	config = function()
 		local conform = require("conform")
 		conform.setup({
+			formatters = {
+				xmlformatter = {
+					prepend_args = { "--selfclose", "--blanks" },
+				},
+			},
 			formatters_by_ft = {
 				lua = { "stylua" },
 				c = { "clang-format" },
@@ -14,6 +19,8 @@ return {
 				typescriptreact = { "prettier" },
 				html = { "prettier" },
 				css = { "prettier" },
+				xml = { "xmlformatter" },
+				cs = { "csharpier" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

@@ -18,6 +18,7 @@ return {
 					"ts_ls",
 					"html",
 					"cssls",
+					"omnisharp",
 				},
 			})
 		end,
@@ -33,6 +34,11 @@ return {
 	},
 	{
 		"mfussenegger/nvim-jdtls",
+	},
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^6",
+		lazy = false,
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -96,17 +102,24 @@ return {
 				},
 			})
 
-			lspconfig.rust_analyzer.setup({
+			vim.g.rustaceanvim = {
 				on_attach = on_attach,
 				capabilities = capabilities,
-				filetypes = { "rust" },
-				settings = {
-					["rust-analyzer"] = {
-						cargo = {
-							allFeatures = true,
+				server = {
+					default_settings = {
+						["rust_analyzer"] = {
+							cargo = {
+								allFeatures = true,
+							},
 						},
 					},
 				},
+			}
+
+			lspconfig.omnisharp.setup({
+				on_attach = on_attach,
+				capabilities = capabilities,
+				filetypes = { "cs" },
 			})
 
 			local html_css_cap = require("cmp_nvim_lsp").default_capabilities()
