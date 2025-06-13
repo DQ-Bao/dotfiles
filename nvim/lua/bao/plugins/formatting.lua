@@ -8,6 +8,11 @@ return {
 				xmlformatter = {
 					prepend_args = { "--selfclose", "--blanks" },
 				},
+				csharpier = {
+					command = "csharpier",
+					args = { "format", "$FILENAME" },
+					stdin = false,
+				},
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },

@@ -23,5 +23,23 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "number"
 
+vim.opt.completeopt = "menu,menuone,fuzzy,popup,noselect"
+vim.opt.confirm = true -- confirm prompt to save file before quit
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
+vim.opt.pumblend = 10 -- transparent popup menu
+vim.opt.pumheight = 20 -- max items in popup menu
+vim.opt.virtualedit = "block"
+
+vim.diagnostic.config({
+	virtual_text = true,
+	severity_sort = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.HINT] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+		},
+	},
+})

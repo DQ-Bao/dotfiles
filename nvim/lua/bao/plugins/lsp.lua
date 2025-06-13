@@ -34,12 +34,65 @@ return {
 		end,
 	},
 	{
+		"Hoffs/omnisharp-extended-lsp.nvim",
+		lazy = false,
+	},
+	{
 		"mfussenegger/nvim-jdtls",
 	},
 	{
 		"mrcjkb/rustaceanvim",
-		version = "^6",
+		version = "^6", -- Recommended
+		lazy = false, -- This plugin is already lazy
+	},
+	{
+		"nvim-flutter/flutter-tools.nvim",
 		lazy = false,
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
+		},
+		config = function()
+			require("flutter-tools").setup({
+				lsp = {
+					color = { enabled = true },
+					on_attach = function(_, buf)
+						local map = vim.keymap.set
+						local telescope = require("telescope.builtin")
+						require("telescope").load_extension("flutter")
+
+						map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
+						map(
+							{ "n", "v" },
+							"<leader>ca",
+							vim.lsp.buf.code_action,
+							{ buffer = buf, desc = "Code actions" }
+						)
+						map("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
+						map("n", "gi", telescope.lsp_implementations, { buffer = buf, desc = "Go to implementations" })
+						map("n", "gr", telescope.lsp_references, { buffer = buf, desc = "Go to references" })
+						map(
+							"n",
+							"<leader>fl",
+							require("telescope").extensions.flutter.commands,
+							{ buffer = buf, desc = "Flutter commands" }
+						)
+						map("n", "<leader>fo", "<cmd>FlutterLogToggle<cr>", { buffer = buf, desc = "Open flutter log" })
+					end,
+					capabilities = require("cmp_nvim_lsp").default_capabilities(),
+					settings = {
+						showTodos = true,
+						completeFunctionCalls = true,
+						renameFilesWithClasses = "prompt", -- "always"
+						enableSnippets = true,
+						updateImportsOnRename = true,
+					},
+				},
+			})
+		end,
+	},
+	{
+		"rest-nvim/rest.nvim",
 	},
 	{
 		"neovim/nvim-lspconfig",
@@ -55,10 +108,51 @@ return {
 			"L3MON4D3/LuaSnip",
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
+			local function on_attach(_, buf)
+				local map = vim.keymap.set
+				local telescope = require("telescope.builtin")
+
+				map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
+				map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code actions" })
+				map("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
+				map("n", "gi", telescope.lsp_implementations, { buffer = buf, desc = "Go to implementations" })
+				map("n", "gr", telescope.lsp_references, { buffer = buf, desc = "Go to references" })
+			end
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			lspconfig.lua_ls.setup({
+			vim.g.rustaceanvim = {
+				server = {
+					on_attach = on_attach,
+					capabilities = capabilities,
+					default_settings = {
+						["rust-analyzer"] = {
+							cargo = {
+								allFeatures = true,
+							},
+						},
+					},
+					status_notify_level = false,
+				},
+			}
+
+			vim.lsp.config("clangd", {
+				on_attach = on_attach,
+				capabilities = capabilities,
+				cmd = {
+					"clangd",
+					"--background-index",
+					"--completion-style=detailed",
+					"--function-arg-placeholders",
+					"--header-insertion=iwyu",
+					"--header-insertion-decorators",
+					"--enable-config",
+					"--log=verbose",
+				},
+			})
+			vim.lsp.enable("clangd")
+
+			vim.lsp.config("lua_ls", {
+				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -75,54 +169,30 @@ return {
 					},
 				},
 			})
-
-			lspconfig.clangd.setup({
-				capabilities = capabilities,
-				cmd = {
-					"clangd",
-					"--background-index",
-					"--completion-style=detailed",
-					"--function-arg-placeholders",
-					"--header-insertion=iwyu",
-					"--header-insertion-decorators",
-					"--enable-config",
-					"--log=verbose",
-				},
-			})
-
-			vim.g.rustaceanvim = {
-				capabilities = capabilities,
-				server = {
-					default_settings = {
-						["rust_analyzer"] = {
-							cargo = {
-								allFeatures = true,
-							},
-						},
-					},
-				},
-			}
-
-			lspconfig.omnisharp.setup({
-				capabilities = capabilities,
-				filetypes = { "cs" },
-			})
+			vim.lsp.enable("lua_ls")
 
 			local html_css_cap = require("cmp_nvim_lsp").default_capabilities()
 			html_css_cap.textDocument.completion.completionItem.snippetSupport = true
-			lspconfig.cssls.setup({
+			vim.lsp.config("cssls", {
+				on_attach = on_attach,
 				capabilities = html_css_cap,
 			})
+			vim.lsp.enable("cssls")
 
-			lspconfig.html.setup({
+			vim.lsp.config("html", {
+				on_attach = on_attach,
 				capabilities = html_css_cap,
 			})
+			vim.lsp.enable("html")
 
-			lspconfig.tailwindcss.setup({
+			vim.lsp.config("tailwindcss", {
+				on_attach = on_attach,
 				capabilities = capabilities,
 			})
+			vim.lsp.enable("tailwindcss")
 
-			lspconfig.ts_ls.setup({
+			vim.lsp.config("ts_ls", {
+				on_attach = on_attach,
 				capabilities = capabilities,
 				settings = {
 					single_file_support = false,
@@ -152,6 +222,43 @@ return {
 					},
 				},
 			})
+			vim.lsp.enable("ts_ls")
+
+			vim.lsp.config("glsl_analyzer", {
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("glsl_analyzer")
+
+			vim.lsp.config("omnisharp", {
+				on_attach = function(_, buf)
+					local map = vim.keymap.set
+					local omni = require("omnisharp_extended")
+
+					map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
+					map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code actions" })
+					map("n", "gd", omni.telescope_lsp_definition, { buffer = buf, desc = "Go to definition" })
+					map("n", "gi", omni.telescope_lsp_implementation, { buffer = buf, desc = "Go to implementations" })
+					map("n", "gr", omni.telescope_lsp_references, { buffer = buf, desc = "Go to references" })
+				end,
+				capabilities = capabilities,
+				settings = {
+					FormattingOptions = {
+						EnableEditorConfigSupport = true,
+						OrganizeImports = true,
+					},
+					MsBuild = {
+						Enabled = true,
+						LoadProjectsOnDemand = true,
+					},
+					RoslynExtensionsOptions = {
+						EnableAnalyzersSupport = true,
+						EnableDecompilationSupport = true,
+						EnableImportCompletion = true,
+					},
+				},
+			})
+			vim.lsp.enable("omnisharp")
 
 			local cmp = require("cmp")
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }

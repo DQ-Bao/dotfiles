@@ -20,9 +20,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require("bao.config.options")
 require("bao.config.autocmds")
 require("bao.config.keymaps")
-require("bao.config.options")
 require("lazy").setup({
 	spec = {
 		{ import = "bao.plugins" },

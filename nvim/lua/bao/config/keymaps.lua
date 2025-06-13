@@ -1,6 +1,13 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- Unmap default lsp keymaps
+vim.keymap.del("n", "grn")
+vim.keymap.del({ "n", "v" }, "gra")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "gri")
+vim.keymap.del("n", "gO")
+
 -- Better up and down on wrapped line
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -35,7 +42,11 @@ vim.keymap.set("v", ">", ">gv", { desc = "Indent lines", silent = true })
 local diagnostic_goto = function(next, severity)
 	severity = severity and vim.diagnostic.severity[severity] or nil
 	return function()
-		vim.diagnostic.jump({ count = next and 1 or -1, float = true, severity = severity })
+		vim.diagnostic.jump({
+			count = next and 1 or -1,
+			float = true,
+			severity = severity,
+		})
 	end
 end
 vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "View Diagnostics" })
