@@ -245,6 +245,79 @@ local function setup_jdtls()
 		on_attach = on_attach,
 	}
 
+	-- Override ui
+	local themes = require("telescope.themes")
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+	require("jdtls.ui").pick_many = function(items, prompt, label_fn, opts)
+		if not items or #items == 0 then
+			return {}
+		end
+
+		label_fn = label_fn or function(item)
+			return tostring(item)
+		end
+		opts = opts or {}
+
+		local co = coroutine.running()
+		pickers
+			.new(themes.get_dropdown(), {
+				prompt_title = prompt,
+				finder = finders.new_table({
+					results = items,
+					entry_maker = function(entry)
+						local idx = 1
+						for i, v in ipairs(items) do
+							if v == entry then
+								idx = i
+							end
+						end
+						local label = label_fn(entry)
+						local entry_display = require("telescope.pickers.entry_display").create({
+							separator = "",
+							items = {
+								{ width = 4 }, -- for number
+								{ remaining = true },
+							},
+						})
+						return {
+							value = entry,
+							display = function(_)
+								return entry_display({
+									{ string.format("%d.", idx), "TelescopeResultsNumber" },
+									label,
+								})
+							end,
+							ordinal = label,
+						}
+					end,
+				}),
+				attach_mappings = function(prompt_bufnr, _)
+					local picker = action_state.get_current_picker(prompt_bufnr)
+					actions.select_default:replace(function(bufnr)
+						local sel = picker:get_multi_selection()
+						if vim.tbl_isempty(sel) then
+							local current = action_state.get_selected_entry()
+							if current then
+								sel = { current }
+							end
+						end
+						local res = vim.tbl_map(function(entry)
+							return entry.value
+						end, sel)
+						actions.close(bufnr)
+						vim.schedule(function()
+							coroutine.resume(co, res)
+						end)
+					end)
+					return true
+				end,
+			})
+			:find()
+		return coroutine.yield()
+	end
 	require("jdtls").start_or_attach(config)
 end
 

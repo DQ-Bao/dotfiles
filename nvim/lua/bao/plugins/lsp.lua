@@ -260,6 +260,12 @@ return {
 			})
 			vim.lsp.enable("omnisharp")
 
+			vim.lsp.config("gopls", {
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("gopls")
+
 			local cmp = require("cmp")
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 			cmp.setup({
