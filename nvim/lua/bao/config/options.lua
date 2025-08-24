@@ -30,6 +30,7 @@ vim.opt.cursorlineopt = "number"
 vim.opt.pumblend = 10 -- transparent popup menu
 vim.opt.pumheight = 20 -- max items in popup menu
 vim.opt.virtualedit = "block"
+vim.opt.winborder = "rounded"
 
 vim.diagnostic.config({
 	virtual_text = true,

@@ -22,18 +22,8 @@ vim.keymap.set("n", "<C-o>", "<cmd>e #<cr>", { desc = "Previous buffer", silent 
 vim.keymap.set("n", "<C-x>", "<cmd>bd<cr>", { desc = "Delete buffer", silent = true })
 
 -- Move lines up/down and auto indent
-vim.keymap.set(
-	"v",
-	"J",
-	":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv",
-	{ desc = "Move line down", silent = true }
-)
-vim.keymap.set(
-	"v",
-	"K",
-	":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv",
-	{ desc = "Move line up", silent = true }
-)
+vim.keymap.set("v", "J", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { silent = true })
+vim.keymap.set("v", "K", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { silent = true })
 
 -- Indent/Unindent and reselect that lines
 vim.keymap.set("v", "<", "<gv", { desc = "Unindent lines", silent = true })

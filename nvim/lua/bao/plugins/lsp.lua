@@ -19,6 +19,8 @@ return {
 					"html",
 					"cssls",
 					"omnisharp",
+					"gopls",
+					"pyright",
 				},
 				automatic_enable = false,
 			})
@@ -26,7 +28,7 @@ return {
 	},
 	{
 		"p00f/clangd_extensions.nvim",
-		lazy = false,
+		ft = { "c", "cpp" },
 		config = function()
 			require("clangd_extensions").setup()
 			vim.keymap.set("n", "<leader>sh", ":ClangdSwitchSourceHeader<CR>")
@@ -35,7 +37,7 @@ return {
 	},
 	{
 		"Hoffs/omnisharp-extended-lsp.nvim",
-		lazy = false,
+		ft = "cs",
 	},
 	{
 		"mfussenegger/nvim-jdtls",
@@ -47,7 +49,7 @@ return {
 	},
 	{
 		"nvim-flutter/flutter-tools.nvim",
-		lazy = false,
+		ft = "dart",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"stevearc/dressing.nvim", -- optional for vim.ui.select
@@ -266,7 +268,14 @@ return {
 			})
 			vim.lsp.enable("gopls")
 
+			vim.lsp.config("pyright", {
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
+			vim.lsp.enable("pyright")
+
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 			cmp.setup({
 				sources = cmp.config.sources({
@@ -286,6 +295,20 @@ return {
 					["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 					["<C-Space>"] = cmp.mapping.complete(),
+					["<C-l>"] = cmp.mapping(function(fallback)
+						if luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<C-h>"] = cmp.mapping(function(fallback)
+						if luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
 				}),
 				sorting = {
 					comparators = {
