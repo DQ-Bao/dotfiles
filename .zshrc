@@ -1,7 +1,8 @@
 # Environment
-readonly WIN_HOME=$(cygpath -u "${USERPROFILE}")
-readonly WIN_LOCAL=$(cygpath -u "${LOCALAPPDATA}")
+WIN_HOME=$(cygpath -u "${USERPROFILE}")
+WIN_LOCAL=$(cygpath -u "${LOCALAPPDATA}")
 PATH="${HOME}/.local/bin:${PATH}"
+PATH="/c/Program Files/Wezterm:${PATH}"
 PATH="/c/Program Files/Git/cmd:${PATH}"
 PATH="/c/Program Files/PowerShell/7:${PATH}"
 PATH="/c/Program Files/Neovim/bin:${PATH}"
@@ -26,7 +27,8 @@ PATH="/c/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.4
 PATH="/d/Dev/vendor/ninja:${PATH}"
 PATH="/d/flutter/bin:${PATH}"
 PATH="/c/Program Files/Go/bin:${PATH}"
-PATH="d/Android/cmdline-tools/bin:${PATH}"
+PATH="/d/Android/cmdline-tools/bin:${PATH}"
+PATH="/d/zig-x86_64-windows-0.15.1:${PATH}"
 export ANDROID_HOME="D:/Android"
 export ANDROID_SDK_ROOT="D:/Android"
 export CATALINA_HOME="C:/Program Files/Apache Software Foundation/Tomcat 10.1"

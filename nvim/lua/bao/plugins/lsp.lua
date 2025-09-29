@@ -137,99 +137,17 @@ return {
 				},
 			}
 
-			vim.lsp.config("clangd", {
+			vim.lsp.config("*", {
 				on_attach = on_attach,
 				capabilities = capabilities,
-				cmd = {
-					"clangd",
-					"--background-index",
-					"--completion-style=detailed",
-					"--function-arg-placeholders",
-					"--header-insertion=iwyu",
-					"--header-insertion-decorators",
-					"--enable-config",
-					"--log=verbose",
-				},
 			})
+
 			vim.lsp.enable("clangd")
-
-			vim.lsp.config("lua_ls", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						runtime = { version = "Lua 5.1" },
-						diagnostics = {
-							globals = { "vim" },
-						},
-						workspace = {
-							library = {
-								vim.env.VIMRUNTIME,
-								vim.env.VIMRUNTIME .. "/lua",
-							},
-						},
-					},
-				},
-			})
 			vim.lsp.enable("lua_ls")
-
-			local html_css_cap = require("cmp_nvim_lsp").default_capabilities()
-			html_css_cap.textDocument.completion.completionItem.snippetSupport = true
-			vim.lsp.config("cssls", {
-				on_attach = on_attach,
-				capabilities = html_css_cap,
-			})
 			vim.lsp.enable("cssls")
-
-			vim.lsp.config("html", {
-				on_attach = on_attach,
-				capabilities = html_css_cap,
-			})
 			vim.lsp.enable("html")
-
-			vim.lsp.config("tailwindcss", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
 			vim.lsp.enable("tailwindcss")
-
-			vim.lsp.config("ts_ls", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-				settings = {
-					single_file_support = false,
-					settings = {
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "literal",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-					},
-				},
-			})
 			vim.lsp.enable("ts_ls")
-
-			vim.lsp.config("glsl_analyzer", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
 			vim.lsp.enable("glsl_analyzer")
 
 			vim.lsp.config("omnisharp", {
@@ -243,36 +161,12 @@ return {
 					map("n", "gi", omni.telescope_lsp_implementation, { buffer = buf, desc = "Go to implementations" })
 					map("n", "gr", omni.telescope_lsp_references, { buffer = buf, desc = "Go to references" })
 				end,
-				capabilities = capabilities,
-				settings = {
-					FormattingOptions = {
-						EnableEditorConfigSupport = true,
-						OrganizeImports = true,
-					},
-					MsBuild = {
-						Enabled = true,
-						LoadProjectsOnDemand = true,
-					},
-					RoslynExtensionsOptions = {
-						EnableAnalyzersSupport = true,
-						EnableDecompilationSupport = true,
-						EnableImportCompletion = true,
-					},
-				},
 			})
 			vim.lsp.enable("omnisharp")
 
-			vim.lsp.config("gopls", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
 			vim.lsp.enable("gopls")
-
-			vim.lsp.config("pyright", {
-				on_attach = on_attach,
-				capabilities = capabilities,
-			})
 			vim.lsp.enable("pyright")
+			vim.lsp.enable("zls")
 
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")

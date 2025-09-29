@@ -34,6 +34,18 @@ return {
 					end,
 					desc = "Change directory",
 				},
+				["<leader>y"] = {
+					function()
+						local oil = require("oil")
+						local entry = oil.get_cursor_entry()
+						if not entry then
+							return
+						end
+						local path = oil.get_current_dir() .. entry.name
+						vim.fn.setreg("+", path)
+					end,
+					desc = "Copy path",
+				},
 			},
 		})
 		vim.keymap.set("n", "<leader>pv", ":Oil<CR>", {})
