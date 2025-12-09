@@ -93,9 +93,9 @@ return {
 			})
 		end,
 	},
-	{
-		"rest-nvim/rest.nvim",
-	},
+	-- {
+	-- 	"rest-nvim/rest.nvim",
+	-- },
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -167,6 +167,7 @@ return {
 			vim.lsp.enable("gopls")
 			vim.lsp.enable("pyright")
 			vim.lsp.enable("zls")
+			vim.lsp.enable("kulala_ls")
 
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")

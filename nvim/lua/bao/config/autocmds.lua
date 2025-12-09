@@ -11,9 +11,9 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	desc = "Start jdtls",
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = "http",
-	callback = function()
-		vim.keymap.set("n", "<leader>r", "<cmd>Rest run<cr>", { desc = "Run request", silent = true })
-	end,
-})
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+-- 	pattern = "http",
+-- 	callback = function()
+-- 		vim.keymap.set("n", "<leader>r", "<cmd>Rest run<cr>", { desc = "Run request", silent = true })
+-- 	end,
+-- })

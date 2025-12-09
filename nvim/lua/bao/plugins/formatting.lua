@@ -5,14 +5,14 @@ return {
 		local conform = require("conform")
 		conform.setup({
 			formatters = {
-				xmlformatter = {
-					prepend_args = { "--selfclose", "--blanks" },
-				},
-				csharpier = {
-					command = "csharpier",
-					args = { "format", "$FILENAME" },
-					stdin = false,
-				},
+				-- xmlformatter = {
+				-- 	prepend_args = { "--selfclose", "--blanks" },
+				-- },
+				-- csharpier = {
+				-- 	command = "csharpier",
+				-- 	args = { "format", "$FILENAME" },
+				-- 	stdin = false,
+				-- },
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -24,8 +24,9 @@ return {
 				typescriptreact = { "prettier" },
 				html = { "prettier" },
 				css = { "prettier" },
-				xml = { "xmlformatter" },
-				cs = { "csharpier" },
+				-- xml = { "xmlformatter" },
+				-- cs = { "csharpier" },
+				http = { "kulala-fmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
