@@ -1,8 +1,23 @@
+local function map_general_lsp_keymap(buf)
+	local map = vim.keymap.set
+	local telescope = require("telescope.builtin")
+	map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
+	map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code actions" })
+	map("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
+	map("n", "gi", telescope.lsp_implementations, { buffer = buf, desc = "Go to implementations" })
+	map("n", "gr", telescope.lsp_references, { buffer = buf, desc = "Go to references" })
+end
+
 return {
 	{
 		"williamboman/mason.nvim",
 		config = function()
-			require("mason").setup()
+			require("mason").setup({
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:Crashdummyy/mason-registry",
+				},
+			})
 		end,
 	},
 	{
@@ -18,7 +33,6 @@ return {
 					"ts_ls",
 					"html",
 					"cssls",
-					"omnisharp",
 					"gopls",
 					"pyright",
 				},
@@ -35,13 +49,7 @@ return {
 			vim.keymap.set("n", "<leader>ih", ":ClangdToggleInlayHints<CR>")
 		end,
 	},
-	{
-		"Hoffs/omnisharp-extended-lsp.nvim",
-		ft = "cs",
-	},
-	{
-		"mfussenegger/nvim-jdtls",
-	},
+	{ "mfussenegger/nvim-jdtls" },
 	{
 		"mrcjkb/rustaceanvim",
 		version = "^6", -- Recommended
@@ -59,26 +67,12 @@ return {
 				lsp = {
 					color = { enabled = true },
 					on_attach = function(_, buf)
+						map_general_lsp_keymap(buf)
 						local map = vim.keymap.set
-						local telescope = require("telescope.builtin")
-						require("telescope").load_extension("flutter")
-
-						map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
-						map(
-							{ "n", "v" },
-							"<leader>ca",
-							vim.lsp.buf.code_action,
-							{ buffer = buf, desc = "Code actions" }
-						)
-						map("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
-						map("n", "gi", telescope.lsp_implementations, { buffer = buf, desc = "Go to implementations" })
-						map("n", "gr", telescope.lsp_references, { buffer = buf, desc = "Go to references" })
-						map(
-							"n",
-							"<leader>fl",
-							require("telescope").extensions.flutter.commands,
-							{ buffer = buf, desc = "Flutter commands" }
-						)
+						local telescope = require("telescope")
+						telescope.load_extension("flutter")
+						local flutter_commands = telescope.extensions.flutter.commands
+						map("n", "<leader>fl", flutter_commands, { buffer = buf, desc = "Flutter commands" })
 						map("n", "<leader>fo", "<cmd>FlutterLogToggle<cr>", { buffer = buf, desc = "Open flutter log" })
 					end,
 					capabilities = require("cmp_nvim_lsp").default_capabilities(),
@@ -93,38 +87,22 @@ return {
 			})
 		end,
 	},
-	-- {
-	-- 	"rest-nvim/rest.nvim",
-	-- },
+	{ "seblyng/roslyn.nvim" },
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/nvim-cmp",
-			"L3MON4D3/LuaSnip",
 		},
 		config = function()
-			local function on_attach(_, buf)
-				local map = vim.keymap.set
-				local telescope = require("telescope.builtin")
-
-				map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
-				map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code actions" })
-				map("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
-				map("n", "gi", telescope.lsp_implementations, { buffer = buf, desc = "Go to implementations" })
-				map("n", "gr", telescope.lsp_references, { buffer = buf, desc = "Go to references" })
-			end
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			vim.g.rustaceanvim = {
 				server = {
-					on_attach = on_attach,
+					on_attach = function(_, buf)
+						map_general_lsp_keymap(buf)
+					end,
 					capabilities = capabilities,
 					default_settings = {
 						["rust-analyzer"] = {
@@ -138,7 +116,9 @@ return {
 			}
 
 			vim.lsp.config("*", {
-				on_attach = on_attach,
+				on_attach = function(_, buf)
+					map_general_lsp_keymap(buf)
+				end,
 				capabilities = capabilities,
 			})
 
@@ -149,75 +129,11 @@ return {
 			vim.lsp.enable("tailwindcss")
 			vim.lsp.enable("ts_ls")
 			vim.lsp.enable("glsl_analyzer")
-
-			vim.lsp.config("omnisharp", {
-				on_attach = function(_, buf)
-					local map = vim.keymap.set
-					local omni = require("omnisharp_extended")
-
-					map("n", "<leader>rn", vim.lsp.buf.rename, { buffer = buf, desc = "Code rename" })
-					map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code actions" })
-					map("n", "gd", omni.telescope_lsp_definition, { buffer = buf, desc = "Go to definition" })
-					map("n", "gi", omni.telescope_lsp_implementation, { buffer = buf, desc = "Go to implementations" })
-					map("n", "gr", omni.telescope_lsp_references, { buffer = buf, desc = "Go to references" })
-				end,
-			})
-			vim.lsp.enable("omnisharp")
-
+			vim.lsp.enable("roslyn")
 			vim.lsp.enable("gopls")
 			vim.lsp.enable("pyright")
 			vim.lsp.enable("zls")
 			vim.lsp.enable("kulala_ls")
-
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
-			local cmp_select = { behavior = cmp.SelectBehavior.Select }
-			cmp.setup({
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-				}, {
-					{ name = "buffer" },
-					{ name = "path" },
-				}),
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-k>"] = cmp.mapping.select_prev_item(cmp_select),
-					["<C-j>"] = cmp.mapping.select_next_item(cmp_select),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-l>"] = cmp.mapping(function(fallback)
-						if luasnip.expand_or_jumpable() then
-							luasnip.expand_or_jump()
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-					["<C-h>"] = cmp.mapping(function(fallback)
-						if luasnip.jumpable(-1) then
-							luasnip.jump(-1)
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				}),
-				sorting = {
-					comparators = {
-						cmp.config.compare.offset,
-						cmp.config.compare.exact,
-						cmp.config.compare.recently_used,
-						require("clangd_extensions.cmp_scores"),
-						cmp.config.compare.kind,
-						cmp.config.compare.sort_text,
-						cmp.config.compare.length,
-						cmp.config.compare.order,
-					},
-				},
-			})
 		end,
 	},
 }

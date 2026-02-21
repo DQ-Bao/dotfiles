@@ -5,14 +5,14 @@ return {
 		local conform = require("conform")
 		conform.setup({
 			formatters = {
-				-- xmlformatter = {
-				-- 	prepend_args = { "--selfclose", "--blanks" },
-				-- },
-				-- csharpier = {
-				-- 	command = "csharpier",
-				-- 	args = { "format", "$FILENAME" },
-				-- 	stdin = false,
-				-- },
+				xmlformatter = {
+					prepend_args = { "--selfclose", "--blanks" },
+				},
+				csharpier = {
+					command = "csharpier",
+					args = { "format", "$FILENAME" },
+					stdin = false,
+				},
 			},
 			formatters_by_ft = {
 				lua = { "stylua" },
@@ -24,8 +24,9 @@ return {
 				typescriptreact = { "prettier" },
 				html = { "prettier" },
 				css = { "prettier" },
-				-- xml = { "xmlformatter" },
-				-- cs = { "csharpier" },
+				xml = { "xmlformatter" },
+				cs = { "csharpier" },
+				razor = { "csharpier" },
 				http = { "kulala-fmt" },
 			},
 			format_on_save = {
@@ -34,10 +35,7 @@ return {
 			},
 		})
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
-			conform.format({
-				lsp_fallback = true,
-				async = false,
-			})
+			conform.format({ lsp_fallback = true, async = false })
 		end, { desc = "Formatting" })
 	end,
 }
