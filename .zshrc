@@ -17,17 +17,13 @@ PATH="/c/Program Files/CMake/bin:${PATH}"
 PATH="/d/apache-maven-3.9.6/bin:${PATH}"
 PATH="${WIN_LOCAL}/nvim-data/lazy-rocks/hererocks/bin:${PATH}"
 PATH="/c/Program Files/nodejs:${PATH}"
-PATH="/c/Program Files/PostgreSQL/17/bin:${PATH}"
-PATH="/c/Program Files/MySQL/MySQL Server 8.0/bin:${PATH}"
 PATH="${WIN_HOME}/.cargo/bin:${PATH}"
 PATH="/c/Program Files/Docker/Docker/resources/bin:${PATH}"
-PATH="/c/Program Files/Microsoft SDKs/Azure/CLI2/wbin:${PATH}"
-PATH="/c/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.43.34808/bin/Hostx64/x64:${PATH}"
 PATH="/d/Dev/vendor/ninja:${PATH}"
-PATH="/d/flutter/bin:${PATH}"
 PATH="/c/Program Files/Go/bin:${PATH}"
 PATH="/d/Android/cmdline-tools/bin:${PATH}"
 PATH="/d/zig-x86_64-windows-0.15.1:${PATH}"
+PATH="/d/tools/Odin-dev-2026-03:${PATH}"
 export ANDROID_HOME="D:/Android"
 export ANDROID_SDK_ROOT="D:/Android"
 export CATALINA_HOME="C:/Program Files/Apache Software Foundation/Tomcat 10.1"
@@ -40,26 +36,9 @@ export BAT_THEME="Kanagawa"
 
 # Plugins
 ZSH_CONFIG_DIR="${HOME}/.config/zsh"
-[ ! -d "${ZSH_CONFIG_DIR}" ] && mkdir -p "${ZSH_CONFIG_DIR}"
-
-if [ ! -d "${ZSH_CONFIG_DIR}/fast-syntax-highlighting" ]; then
-    git clone "https://github.com/zdharma-continuum/fast-syntax-highlighting.git" "${ZSH_CONFIG_DIR}/fast-syntax-highlighting"
-fi
 source "${ZSH_CONFIG_DIR}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" 
-
-if [ ! -d "${ZSH_CONFIG_DIR}/zsh-completions" ]; then
-    git clone "https://github.com/zsh-users/zsh-completions.git" "${ZSH_CONFIG_DIR}/zsh-completions"
-fi
 fpath+=("${ZSH_CONFIG_DIR}/zsh-completions/src")
-
-if [ ! -d "${ZSH_CONFIG_DIR}/zsh-autosuggestions" ]; then
-    git clone "https://github.com/zsh-users/zsh-autosuggestions.git" "${ZSH_CONFIG_DIR}/zsh-autosuggestions"
-fi
 source "${ZSH_CONFIG_DIR}/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" 
-
-if [ ! -d "${ZSH_CONFIG_DIR}/fzf-tab" ]; then
-    git clone "https://github.com/Aloxaf/fzf-tab.git" "${ZSH_CONFIG_DIR}/fzf-tab"
-fi
 autoload -Uz compinit; compinit
 source "${ZSH_CONFIG_DIR}/fzf-tab/fzf-tab.plugin.zsh" 
 

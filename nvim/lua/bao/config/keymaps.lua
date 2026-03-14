@@ -16,10 +16,7 @@ vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up",
 
 vim.keymap.set("n", "<leader>sc", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight", silent = true })
 
-vim.keymap.set("n", "<C-n>", "<cmd>bn<cr>", { desc = "Next buffer", silent = true })
-vim.keymap.set("n", "<C-p>", "<cmd>bp<cr>", { desc = "Previous buffer", silent = true })
 vim.keymap.set("n", "<C-o>", "<cmd>e #<cr>", { desc = "Previous buffer", silent = true })
-vim.keymap.set("n", "<C-x>", "<cmd>bd<cr>", { desc = "Delete buffer", silent = true })
 
 -- Move lines up/down and auto indent
 vim.keymap.set("v", "J", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { silent = true })

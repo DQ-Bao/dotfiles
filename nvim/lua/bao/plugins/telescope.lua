@@ -34,4 +34,25 @@ return {
 			require("telescope").load_extension("ui-select")
 		end,
 	},
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local harpoon = require("harpoon")
+			harpoon:setup()
+			vim.keymap.set("n", "<leader>pa", function()
+				harpoon:list():add()
+			end, { desc = "Pin buffer" })
+			vim.keymap.set("n", "<C-n>", function()
+				harpoon:list():next({ ui_nav_wrap = true })
+			end, { desc = "Next pin" })
+			vim.keymap.set("n", "<C-p>", function()
+				harpoon:list():prev({ ui_nav_wrap = true })
+			end, { desc = "Previous pin" })
+			vim.keymap.set("n", "<leader>pl", function()
+				harpoon.ui:toggle_quick_menu(harpoon:list())
+			end, { desc = "Toggle pin menu" })
+		end,
+	},
 }

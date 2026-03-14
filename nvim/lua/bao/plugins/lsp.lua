@@ -106,6 +106,7 @@ return {
 			vim.lsp.enable("pyright")
 			vim.lsp.enable("zls")
 			vim.lsp.enable("kulala_ls")
+			vim.lsp.enable("ols")
 		end,
 	},
 }
