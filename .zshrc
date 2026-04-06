@@ -1,6 +1,16 @@
 # Environment
 WIN_HOME=$(cygpath -u "${USERPROFILE}")
 WIN_LOCAL=$(cygpath -u "${LOCALAPPDATA}")
+export ANDROID_HOME="D:/Android"
+export ANDROID_SDK_ROOT="D:/Android"
+export ANDROID_AVD_HOME="D:/AndroidAvd"
+export CATALINA_HOME="C:/Program Files/Apache Software Foundation/Tomcat 10.1"
+export JAVA_HOME="C:/Program Files/Java/jdk-21"
+export JRE_HOME="C:/Program Files/Java/jdk-21"
+export GOPATH="${WIN_HOME}/go"
+export EDITOR="nvim"
+export MEMO_DIR="d:/memo"
+export BAT_THEME="Kanagawa"
 PATH="${HOME}/.local/bin:${PATH}"
 PATH="/c/Program Files/Wezterm:${PATH}"
 PATH="/c/Program Files/Git/cmd:${PATH}"
@@ -21,26 +31,21 @@ PATH="${WIN_HOME}/.cargo/bin:${PATH}"
 PATH="/c/Program Files/Docker/Docker/resources/bin:${PATH}"
 PATH="/d/Dev/vendor/ninja:${PATH}"
 PATH="/c/Program Files/Go/bin:${PATH}"
-PATH="/d/Android/cmdline-tools/bin:${PATH}"
+PATH="/d/Android/cmdline-tools/19.0/bin:${PATH}"
+PATH="/d/Android/build-tools/36.0.0:${PATH}"
+PATH="/d/Android/platform-tools:${PATH}"
+PATH="/d/Android/emulator:${PATH}"
 PATH="/d/zig-x86_64-windows-0.15.1:${PATH}"
 PATH="/d/tools/Odin-dev-2026-03:${PATH}"
-export ANDROID_HOME="D:/Android"
-export ANDROID_SDK_ROOT="D:/Android"
-export CATALINA_HOME="C:/Program Files/Apache Software Foundation/Tomcat 10.1"
-export JAVA_HOME="C:/Program Files/Java/jdk-21"
-export JRE_HOME="C:/Program Files/Java/jdk-21"
-export GOPATH="${WIN_HOME}/go"
-export EDITOR="nvim"
-export MEMO_DIR="d:/memo"
-export BAT_THEME="Kanagawa"
+PATH="/d/tools/kotlinc/bin:${PATH}"
+PATH="/d/tools/gradle-9.4.1/bin:${PATH}"
 
 # Plugins
-ZSH_CONFIG_DIR="${HOME}/.config/zsh"
-source "${ZSH_CONFIG_DIR}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" 
-fpath+=("${ZSH_CONFIG_DIR}/zsh-completions/src")
-source "${ZSH_CONFIG_DIR}/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" 
+source "${HOME}/.config/zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" 
+fpath+=("${HOME}/.config/zsh/zsh-completions/src")
+source "${HOME}/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" 
 autoload -Uz compinit; compinit
-source "${ZSH_CONFIG_DIR}/fzf-tab/fzf-tab.plugin.zsh" 
+source "${HOME}/.config/zsh/fzf-tab/fzf-tab.plugin.zsh" 
 
 # Prompt
 eval "$(oh-my-posh init zsh --config ${HOME}/.config/ohmyposh/config.toml)"

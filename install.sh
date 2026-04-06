@@ -10,6 +10,7 @@ declare -A targets=(
     [".gitconfig"]="${HOME}/.gitconfig"
     [".wezterm.lua"]="${WIN_HOME}/.wezterm.lua"
     [".zshrc"]="${HOME}/.zshrc"
+    [".gdbinit"]="${HOME}/.gdbinit"
 )
 
 for target in "${!targets[@]}"; do
