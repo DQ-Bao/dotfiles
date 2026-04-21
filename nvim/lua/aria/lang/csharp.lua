@@ -1,4 +1,10 @@
-return {
+vim.api.nvim_create_autocmd("FileType", {
+	once = true,
+	pattern = { "cs" },
+	callback = function() require("roslyn").setup() end,
+})
+
+vim.lsp.config("roslyn", {
 	settings = {
 		["csharp|background_analysis"] = {
 			dotnet_analyzer_diagnostics_scope = "fullSolution",
@@ -20,4 +26,6 @@ return {
 			dotnet_organize_imports_on_format = true,
 		},
 	},
-}
+})
+
+vim.lsp.enable("roslyn")

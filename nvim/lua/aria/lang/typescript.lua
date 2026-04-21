@@ -1,4 +1,4 @@
-return {
+vim.lsp.config("ts_ls", {
 	settings = {
 		single_file_support = false,
 		settings = {
@@ -26,4 +26,6 @@ return {
 			},
 		},
 	},
-}
+})
+
+vim.lsp.enable("ts_ls")

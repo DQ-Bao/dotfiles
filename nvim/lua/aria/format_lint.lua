@@ -1,0 +1,56 @@
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
+	once = true,
+	callback = function()
+		local conform = require("conform")
+		conform.setup({
+			formatters = {
+				xmlformatter = {
+					prepend_args = { "--selfclose", "--blanks" },
+				},
+				csharpier = {
+					command = "csharpier",
+					args = { "format", "$FILENAME" },
+					stdin = false,
+				},
+			},
+			formatters_by_ft = {
+				lua = { "stylua" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
+				javascript = { "prettier" },
+				javascriptreact = { "prettier" },
+				typescript = { "prettier" },
+				typescriptreact = { "prettier" },
+				html = { "prettier" },
+				css = { "prettier" },
+				xml = { "xmlformatter" },
+				cs = { "csharpier" },
+				razor = { "csharpier" },
+				http = { "kulala-fmt" },
+			},
+			format_on_save = { lsp_fallback = true, async = false },
+		})
+		vim.keymap.set(
+			{ "n", "v" },
+			"<leader>mp",
+			function() conform.format({ lsp_fallback = true, async = false }) end,
+			{ desc = "Formatting" }
+		)
+
+		local lint = require("lint")
+		lint.linters_by_ft = {
+			c = { "cpplint" },
+			cpp = { "cpplint" },
+			javascript = { "eslint_d" },
+			javascriptreact = { "eslint_d" },
+			typescript = { "eslint_d" },
+			typescriptreact = { "eslint_d" },
+		}
+		local lint_augroup = vim.api.nvim_create_augroup("Linting", { clear = true })
+		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+			group = lint_augroup,
+			callback = function() lint.try_lint() end,
+		})
+		vim.keymap.set("n", "<leader>ml", function() lint.try_lint() end, { desc = "Linting" })
+	end,
+})
