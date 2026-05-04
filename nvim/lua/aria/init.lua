@@ -34,9 +34,9 @@ vim.pack.add({
 	"https://github.com/NeogitOrg/neogit",
 	"https://github.com/folke/which-key.nvim",
 })
+vim.cmd.packadd("nvim.undotree")
 
-vim.cmd.colorscheme("kanagawa")
-
+require("aria.color")
 require("aria.ui")
 require("mason").setup({
 	registries = {

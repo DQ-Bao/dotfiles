@@ -1,5 +1,5 @@
 vim.o.showmode = false
-vim.o.nu = true
+vim.o.number = true
 vim.o.relativenumber = true
 
 vim.o.tabstop = 4
@@ -25,10 +25,10 @@ vim.diagnostic.config({
 	severity_sort = true,
 	signs = {
 		text = {
-			[vim.diagnostic.severity.ERROR] = " ",
-			[vim.diagnostic.severity.WARN] = " ",
-			[vim.diagnostic.severity.HINT] = " ",
-			[vim.diagnostic.severity.INFO] = " ",
+			[vim.diagnostic.severity.ERROR] = "",
+			[vim.diagnostic.severity.WARN] = "",
+			[vim.diagnostic.severity.HINT] = "",
+			[vim.diagnostic.severity.INFO] = "",
 		},
 	},
 })
