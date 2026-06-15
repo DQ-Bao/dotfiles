@@ -1,9 +1,11 @@
 # Environment
 WIN_HOME=$(cygpath -u "${USERPROFILE}")
+export PIPX_HOME="${HOME}/pipx"
+export PIPX_BIN_DIR="${HOME}/.local/bin"
+export PIPX_MAN_DIR="${HOME}/.local/share/man"
 export ANDROID_HOME="/d/Android"
 export ANDROID_SDK_ROOT="/d/Android"
 export ANDROID_AVD_HOME="/d/AndroidAvd"
-export CATALINA_HOME="/c/Program Files/Apache Software Foundation/Tomcat 10.1"
 export JAVA_HOME="/c/Program Files/Java/jdk-21"
 export JRE_HOME="/c/Program Files/Java/jdk-21"
 export GOPATH="${WIN_HOME}/go"
@@ -16,10 +18,6 @@ path+=(
     "/c/Program Files/Git/cmd"
     "/c/Program Files/PowerShell/7"
     "/c/Program Files/Neovim/bin"
-    "/c/Program Files (x86)/oh-my-posh/bin"
-    "/c/Python311/Scripts"
-    "/c/Python311"
-    "/c/ProgramData/chocolatey/bin"
     "/c/Program Files/Java/jdk-21/bin"
     "/c/Program Files/dotnet"
     "${WIN_HOME}/.dotnet/tools"
@@ -34,7 +32,7 @@ path+=(
     "/d/Android/build-tools/36.0.0"
     "/d/Android/platform-tools"
     "/d/Android/emulator"
-    "/d/zig-x86_64-windows-0.15.1"
+    "/d/zig-x86_64-windows-0.16.0"
     "/d/tools/Odin-dev-2026-03"
     "/d/tools/kotlinc/bin"
     "/d/tools/gradle-9.4.1/bin"
@@ -82,7 +80,7 @@ memo () {
     if [ "$#" -eq 0 ]; then
         "$EDITOR" "${MEMO_DIR}/$(date +%Y-%m-%d).txt"
     else 
-        "$EDITOR" "${MEMO_DIR}/$1.txt"
+        "$EDITOR" "${MEMO_DIR}/$1"
     fi
 }
 
@@ -97,7 +95,7 @@ alias finda='find . -type d,f | fzf --preview="if [ -d {} ]; then eza -la --colo
 alias ls="eza -a --icons --group-directories-first --time-style=long-iso"
 alias ll="eza -al --icons --group-directories-first --time-style=long-iso"
 alias make="mingw32-make"
-alias grep="grep -nH --color=auto"
+alias grep="grep --color=auto"
 alias bath="bat --language=help -p"
 
 alias now='date "+%a, %b %d, %Y %H:%M:%S"'
