@@ -87,13 +87,9 @@ memo () {
 # Aliases
 alias so="source ${HOME}/.zshrc"
 alias path='echo $PATH | tr ":" "\n"'
-
-alias findd='find . -type d | fzf --preview="eza -la --color=always --group-directories-first --time-style=long-iso --icons {}"'
-alias findf='find . -type f | fzf --preview="bat --color=always --style=plain --line-range=:500 {}"'
-alias finda='find . -type d,f | fzf --preview="if [ -d {} ]; then eza -la --color=always --group-directories-first --time-style=long-iso --icons {}; else bat --color=always --style=plain --line-range=:500 {}; fi"'
-
 alias ls="eza -a --icons --group-directories-first --time-style=long-iso"
 alias ll="eza -al --icons --group-directories-first --time-style=long-iso"
+alias fzfpv='fzf --preview="if [ -d {} ]; then eza -al --color=always --icons --group-directories-first --time-style=long-iso {}; else bat --color=always --style=plain --line-range=:500 {}; fi"'
 alias make="mingw32-make"
 alias grep="grep --color=auto"
 alias bath="bat --language=help -p"
