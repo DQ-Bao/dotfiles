@@ -36,6 +36,8 @@ path+=(
     "/d/tools/Odin-dev-2026-03"
     "/d/tools/kotlinc/bin"
     "/d/tools/gradle-9.4.1/bin"
+    "/d/tools/nim-2.2.10/bin"
+    "/c/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64"
 )
 
 # Plugins

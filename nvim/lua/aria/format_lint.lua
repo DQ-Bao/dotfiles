@@ -43,8 +43,6 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 
 		local lint = require("lint")
 		lint.linters_by_ft = {
-			c = { "cpplint" },
-			cpp = { "cpplint" },
 			javascript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },
 			typescript = { "eslint_d" },
