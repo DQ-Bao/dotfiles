@@ -21,6 +21,7 @@ path+=(
     "/c/Program Files/Java/jdk-21/bin"
     "/c/Program Files/dotnet"
     "${WIN_HOME}/.dotnet/tools"
+    "${HOME}/.aspire/bin"
     "/c/Program Files/CMake/bin"
     "/d/apache-maven-3.9.6/bin"
     "/c/Program Files/nodejs"
@@ -57,7 +58,7 @@ bindkey -v
 bindkey "^p" history-search-backward
 bindkey "^n" history-search-forward
 bindkey "^[w" kill-region
-bindkey "^l" autosuggest-accept
+bindkey "^k" autosuggest-accept
 
 zle_highlight+=(paste:none)
 

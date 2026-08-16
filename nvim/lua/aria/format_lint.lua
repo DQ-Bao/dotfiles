@@ -31,13 +31,13 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
 			format_on_save = function(bufnr)
 				local ignore_filetypes = { "c", "cpp" }
 				if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then return end
-				return { timeout_ms = 500, lsp_format = "fallback" }
+				return { timeout_ms = 800, lsp_format = "fallback" }
 			end,
 		})
 		vim.keymap.set(
 			{ "n", "v" },
 			"<leader>mp",
-			function() conform.format({ timeout_ms = 500, lsp_format = "fallback" }) end,
+			function() conform.format({ timeout_ms = 800, lsp_format = "fallback" }) end,
 			{ desc = "Formatting" }
 		)
 
