@@ -58,7 +58,7 @@ bindkey -v
 bindkey "^p" history-search-backward
 bindkey "^n" history-search-forward
 bindkey "^[w" kill-region
-bindkey "^k" autosuggest-accept
+bindkey "^l" autosuggest-accept
 
 zle_highlight+=(paste:none)
 
